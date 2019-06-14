@@ -1,0 +1,45 @@
+@import "node_modules/breakpoint-sass";
+@import "node_modules/breakpoint-slicer";
+
+//this is a 'wrapper' for breakpoint slicer's stupid function names. see variables-site/structure
+@mixin breakpoint-range(  $point:sm, $operator: false  ) {
+	@if ($operator == '>=') {
+		@include from($point) {
+			@content;
+		}
+	} @else if ($operator == "<=") {
+		@include to($point) {
+			@content;
+		}
+	} @else if ( $operator == "=") or ($operator == "==") {
+		@include at($point) {
+			@content;
+		}
+	} @else if ($operator == false) {
+		@include at($point) {
+			@content;
+		}
+	} @else if (contains($slicer-breakpoint-names, $operator)) {
+		@include between($point, $operator) {
+			@content;
+		}
+	}
+}
+
+@mixin debug-breakpoints() {
+	@include breakpoint-range(xs) {
+		background: red;
+	}
+	@include breakpoint-range(sm) {
+		background: orange;
+	}
+	@include breakpoint-range(md) {
+		background: yellow;
+	}
+	@include breakpoint-range(lg) {
+		background: green;
+	}
+	@include breakpoint-range(xl) {
+		background: blue;
+	}
+}

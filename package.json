@@ -7,5 +7,9 @@
     "test": "echo \"Error: no test specified\" && exit 1"
   },
   "author": "Gillian Tunney",
-  "license": "ISC"
+  "license": "ISC",
+  "devDependencies": {
+    "breakpoint-sass": "^2.7.1",
+    "breakpoint-slicer": "^2.0.0"
+  }
 }
