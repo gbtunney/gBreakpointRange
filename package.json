@@ -4,12 +4,14 @@
   "description": "wrapper thing for breakpoint slicer and some debugging utilities",
   "main": "index.js",
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1"
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "styles": "node-sass  -r --watch -rw examples.scss examples.css"
   },
   "author": "Gillian Tunney",
   "license": "ISC",
   "devDependencies": {
     "breakpoint-sass": "^2.7.1",
-    "breakpoint-slicer": "^2.0.0"
+    "breakpoint-slicer": "^2.0.0",
+    "node-sass": "^4.12.0"
   }
 }

@@ -1,0 +1,77 @@
+@import "node_modules/breakpoint-sass/stylesheets/breakpoint";
+@import "node_modules/breakpoint-slicer/stylesheets/breakpoint-slicer";
+
+$breakpoint-presets:(
+	mobile:(
+		point: sm,
+		operator: "<="
+	),
+	desktop:(
+		point: md,
+		operator: ">="
+	)
+)!default;
+
+$slicer-breakpoints: 0 480px 768px 992px 1200px 1500px!default; ;
+
+$slicer-breakpoint-names: (xs sm md lg xl); ///!default causes error for some reason?
+
+$debug-colors: red,orange,yellow,green,blue,purple!default;
+
+//this is a 'wrapper' for breakpoint slicer's stupid function names. see variables-site/structure
+@mixin breakpoint-range(  $point:sm, $operator: false  ) {
+	@debug "POINT IS #{$point } operator: #{$operator}";
+	@if ($operator == '>=') {
+		@include from($point) {
+			@content;
+		}
+	} @else if ($operator == "<=") {
+		@include to($point) {
+			@content;
+		}
+	} @else if ( $operator == "=") or ($operator == "==") {
+		@include at($point) {
+			@content;
+		}
+	} @else if ($operator == false) {
+		@include at($point) {
+			@content;
+		}
+	} @else if (contains($slicer-breakpoint-names, $operator)) {
+		@include between($point, $operator) {
+			@content;
+		}
+	}
+}
+
+@mixin breakpoint-preset( $key:false ,$_breakpoint-presets:$breakpoint-presets ) {
+	@if (map-get($_breakpoint-presets, $key)) {
+		@debug "the preset is found";
+		$preset-map: map-get($_breakpoint-presets, $key);
+		@include breakpoint-range($preset-map...) {
+			@content;
+		};
+
+	} @else {
+		@error "preset #{$key} is not found in the map #{$_breakpoint-presets} ";
+	}
+}
+
+@mixin debug-breakpoints($prop: background, $_slicer-breakpoint-names : $slicer-breakpoint-names, $_debug-colors: $debug-colors) {
+	@each $value in $_slicer-breakpoint-names {
+		$index: index($_slicer-breakpoint-names, $value);
+		@include breakpoint-range($value) {
+			#{$prop}: #{nth( $_debug-colors, $index )};
+		}
+	}
+}
+
+@mixin debug-preset-breakpoints($prop: border-color,$_breakpoint-presets:$breakpoint-presets, $_debug-colors: $debug-colors ) {
+	@each $key, $value in $_breakpoint-presets {
+		$color-index: random(length($_debug-colors));
+		@include breakpoint-preset($key) {
+			#{$prop} : #{lighten( nth( $_debug-colors, $color-index ),20%)};
+			@content;
+		}
+	}
+}
