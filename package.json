@@ -1,0 +1,11 @@
+{
+  "name": "breakpoint-range",
+  "version": "1.0.0",
+  "description": "wrapper thing for breakpoint slicer and some debugging utilities",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "author": "Gillian Tunney",
+  "license": "ISC"
+}
