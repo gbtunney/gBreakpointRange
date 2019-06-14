@@ -4,17 +4,13 @@
 	background: red;
 }
 
-;
-
 @include breakpoint-preset(desktop) {
 	background: green;
 }
 
-;
 div {
 	@include debug-breakpoints;
 }
-
 
 @include debug-preset-breakpoints {
 	border-width: 4px;

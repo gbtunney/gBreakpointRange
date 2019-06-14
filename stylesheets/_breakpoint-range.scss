@@ -20,7 +20,6 @@ $debug-colors: red,orange,yellow,green,blue,purple!default;
 
 //this is a 'wrapper' for breakpoint slicer's stupid function names. see variables-site/structure
 @mixin breakpoint-range(  $point:sm, $operator: false  ) {
-	@debug "POINT IS #{$point } operator: #{$operator}";
 	@if ($operator == '>=') {
 		@include from($point) {
 			@content;
@@ -46,7 +45,6 @@ $debug-colors: red,orange,yellow,green,blue,purple!default;
 
 @mixin breakpoint-preset( $key:false ,$_breakpoint-presets:$breakpoint-presets ) {
 	@if (map-get($_breakpoint-presets, $key)) {
-		@debug "the preset is found";
 		$preset-map: map-get($_breakpoint-presets, $key);
 		@include breakpoint-range($preset-map...) {
 			@content;
