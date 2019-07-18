@@ -1,6 +1,6 @@
 {
   "name": "breakpoint-range",
-  "version": "1.0.0",
+  "version": "1.0.2",
   "description": "wrapper thing for breakpoint slicer and some debugging utilities",
   "main": "index.js",
   "scripts": {
@@ -10,6 +10,16 @@
   "author": "Gillian Tunney",
   "license": "ISC",
   "devDependencies": {
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/gbtunney/gBreakpointRange.git"
+  },
+  "bugs": {
+    "url": "https://github.com/gbtunney/gBreakpointRange/issues"
+  },
+  "homepage": "https://github.com/gbtunney/gBreakpointRange#readme",
+  "dependencies": {
     "breakpoint-sass": "^2.7.1",
     "breakpoint-slicer": "^2.0.0",
     "node-sass": "^4.12.0"

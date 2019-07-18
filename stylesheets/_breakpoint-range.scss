@@ -73,3 +73,35 @@ $debug-colors: red,orange,yellow,green,blue,purple!default;
 		}
 	}
 }
+
+///***    operators:   *= starts with  ^= contains  = equals
+@mixin debug-outline-class($value: "c-", $color: false,$operator: "*=" /*starts with*/, $outline: true ) {
+
+	@if ($color == false) {
+		$debug-colors: red, orange, yellow, green, blue, purple;
+		$color-index: random(length($debug-colors));
+		$color: nth($debug-colors, $color-index);
+	}
+	[class#{$operator}#{$value}]{
+		@if ($outline){
+			outline:2px solid $color;
+		}
+		@content;
+	}
+}
+@mixin debug-trace-attr($attribute: class ){
+	&:before {
+		content: attr(#{$attribute});
+		@content;
+	}
+}
+
+/* EXAMPLE USAGE! */
+@include debug-outline-class("featured-product"){
+	@include debug-trace-attr(){
+		background: white;
+		height: 40px;
+		width: 40px;
+		color:red;
+	};
+};
