@@ -1,0 +1,81 @@
+//modified from here https://github.com/nahuelsotelo/sass.slider-mixin/tree/master/src
+
+$animated-layer-selector: 'animateLayer-' !default;
+$slide-count: 5 !default;
+$visible-time: 2!default;
+$transition-time: 1!default;
+
+$image-slide-path: 'slides/image' !default;
+$image-slide-selector: '`image-slide-' !default; //alternate
+
+
+@keyframes moveIt {
+	from {
+		margin-left: 0;
+	}
+
+	to {
+		margin-left: 20px;
+	}
+}
+
+
+@mixin sequence-fade($_visible-time:$visible-time, $_transition-time:$transition-time, $_slide-count:$slide-count, $animation-iterations : 3,$stop-last-slide: true, $animation-id: $_slide-count , $_animated-layer-selector:$animated-layer-selector) {
+	$animation-id: fade-#{$animation-id};
+	$total-duration: (($_transition-time + $_visible-time) * $_slide-count) ;
+
+	$a: 100 / (($_transition-time + $_visible-time) * $_slide-count);
+
+	@keyframes #{$animation-id} {
+		0% {
+			opacity: 0;
+		}
+		#{percentage($a * $_transition-time)} {
+			opacity: 1;
+		}
+		#{percentage($a * ($_transition-time + $_visible-time))} {
+			opacity: 1;
+		}
+		#{percentage($a * ($_transition-time + $_visible-time + $_transition-time))} {
+			opacity: 0;
+		}
+		100% {
+			opacity: 0;
+		}
+	}
+
+	[ id ^= "#{$_animated-layer-selector}" ] {
+		animation:  #{$animation-id} #{$total-duration}s linear #{$animation-iterations} 0s;
+	}
+
+	@for $i from 1 through $_slide-count {
+
+		[ id ^= "#{$_animated-layer-selector}#{$i}" ], [ id ^= "#{$_animated-layer-selector}hold-#{$i}" ] {
+			opacity:0;
+			animation-delay: #{ ( ($_transition-time + $_visible-time) * ($i - 1))}s;
+			@if ($stop-last-slide) {
+				@if (($i == $_slide-count)) {
+					animation-iteration-count: #{ ($animation-iterations - 1) + .15 };
+					animation-fill-mode:both;
+				}
+			}
+		}
+	}
+}
+@mixin image-slide-background($_image-slide-selector:$image-slide-selector, $_slide-count:$slide-count,$_image-slide-path:$image-slide-path) {
+
+	[class^="#{$_image-slide-selector}"] {
+		backface-visibility: hidden;
+		background-size: 100%;
+		background-position: 50% 50%;
+		background-repeat: no-repeat;
+		color: transparent;
+	}
+
+	@for $i from 1 to $_slide-count + 1 {
+		&:nth-child(#{$i}) {
+			$url: '#{$_image-slide-path}slide#{$i}.png';
+			background-image: url($url);
+		}
+	}
+}
